@@ -3,13 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>珍芯晴 - 神秘塔羅占卜</title>
+  <title>珍芯晴 ✦ 神秘塔羅靈魂指引</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
       background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
@@ -18,160 +14,283 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 20px;
+      padding: 30px 15px;
       overflow-x: hidden;
     }
-    .header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
+    .header { text-align: center; margin-bottom: 25px; }
     .header h1 {
       font-size: 2.2rem;
-      letter-spacing: 2px;
       color: #f39c12;
-      text-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
-      margin-bottom: 10px;
+      text-shadow: 0 0 12px rgba(243, 156, 18, 0.6);
+      margin-bottom: 8px;
     }
-    .header p {
-      color: #bdc3c7;
-      font-size: 1rem;
-    }
-    .card-container {
-      perspective: 1000px;
-      margin-bottom: 30px;
-    }
-    .card {
-      width: 200px;
-      height: 340px;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      cursor: pointer;
-    }
-    .card.flipped {
-      transform: rotateY(180deg);
-    }
-    .card-face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 15px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    .header p { color: #bdc3c7; font-size: 0.95rem; }
+    
+    /* 音樂播放控制 */
+    .audio-control {
+      margin-bottom: 20px;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      border: 2px solid #f39c12;
-      padding: 20px;
-      text-align: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.1);
+      padding: 8px 18px;
+      border-radius: 20px;
+    }
+    .audio-btn {
+      background: #f39c12; color: #000; border: none; padding: 5px 12px;
+      border-radius: 12px; cursor: pointer; font-weight: bold;
+    }
+
+    /* 牌陣選擇按鈕 */
+    .spread-selector {
+      display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center;
+    }
+    .spread-btn {
+      padding: 10px 20px; border: 1px solid #f39c12; background: rgba(0,0,0,0.5);
+      color: #f39c12; border-radius: 20px; cursor: pointer; transition: all 0.3s;
+    }
+    .spread-btn.active, .spread-btn:hover {
+      background: #f39c12; color: #000; font-weight: bold;
+    }
+
+    /* 牌卡展示區 */
+    .cards-display {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;
+      max-width: 1000px; width: 100%; margin-bottom: 40px;
+    }
+    .card-item {
+      display: flex; flex-direction: column; align-items: center; width: 160px;
+    }
+    .card-label { margin-bottom: 8px; color: #f1c40f; font-size: 0.9rem; }
+    .card {
+      width: 150px; height: 260px; perspective: 1000px; cursor: pointer;
+    }
+    .card-inner {
+      width: 100%; height: 100%; position: relative;
+      transform-style: preserve-3d; transition: transform 0.8s;
+      border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    }
+    .card.flipped .card-inner { transform: rotateY(180deg); }
+    .card-face {
+      position: absolute; width: 100%; height: 100%;
+      backface-visibility: hidden; border-radius: 10px; border: 2px solid #f39c12;
+      overflow: hidden;
     }
     .card-back {
       background: linear-gradient(135deg, #2c3e50, #4a00e0);
+      display: flex; align-items: center; justify-content: center;
     }
-    .card-back::after {
-      content: '✦';
-      font-size: 3rem;
-      color: #f39c12;
-    }
+    .card-back::after { content: '✦'; font-size: 2.5rem; color: #f39c12; }
     .card-front {
-      background: #ffffff;
-      color: #2c3e50;
-      transform: rotateY(180deg);
+      background: #fff; color: #000; transform: rotateY(180deg);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
-    .card-title {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin-bottom: 15px;
-      color: #8e44ad;
+    .card-front img { width: 100%; height: 100%; object-fit: cover; }
+    
+    /* 牌卡解析卡片 */
+    .reading-box {
+      background: rgba(255, 255, 255, 0.08); border-radius: 15px;
+      padding: 25px; max-width: 800px; width: 100%; margin-bottom: 40px;
+      border: 1px solid rgba(243, 156, 18, 0.3); display: none;
     }
-    .card-desc {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: #34495e;
-    }
-    .actions {
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+    .reading-box h2 { color: #f39c12; margin-bottom: 15px; font-size: 1.4rem; text-align: center; }
+    .reading-item { margin-bottom: 12px; border-bottom: 1px dashed rgba(255,255,255,0.2); padding-bottom: 10px; }
+    .reading-item strong { color: #f1c40f; }
+
+    /* 按鈕區 */
+    .actions { display: flex; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; justify-content: center; }
     .btn {
-      padding: 12px 28px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      font-weight: bold;
+      padding: 12px 30px; border-radius: 25px; text-decoration: none;
+      font-weight: bold; border: none; cursor: pointer; transition: 0.3s;
     }
-    .btn-draw {
-      background: linear-gradient(45deg, #f39c12, #e67e22);
-      color: #fff;
-      box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+    .btn-draw { background: linear-gradient(45deg, #f39c12, #e67e22); color: #fff; }
+    .btn-line { background: #06c755; color: #fff; }
+
+    /* 互動留言區 */
+    .comment-section {
+      background: rgba(0,0,0,0.4); border-radius: 15px; padding: 25px;
+      max-width: 800px; width: 100%; border: 1px solid #333;
     }
-    .btn-draw:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(243, 156, 18, 0.6);
+    .comment-section h3 { color: #f39c12; margin-bottom: 15px; }
+    .comment-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+    .comment-input, .comment-textarea {
+      padding: 10px; border-radius: 8px; border: 1px solid #555; background: #222; color: #fff;
     }
-    .btn-line {
-      background: #06c755;
-      color: #fff;
-      box-shadow: 0 4px 15px rgba(6, 199, 85, 0.4);
-    }
-    .btn-line:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(6, 199, 85, 0.6);
-    }
+    .comment-list { display: flex; flex-direction: column; gap: 10px; }
+    .comment-card { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; font-size: 0.9rem; }
+    .comment-name { color: #f1c40f; font-weight: bold; margin-bottom: 4px; }
   </style>
 </head>
 <body>
 
+  <!-- 背景音樂 -->
+  <audio id="bgm" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=meditation-spiritual-112191.mp3"></audio>
+
   <div class="header">
     <h1>珍芯晴 ✦ 塔羅靈魂指引</h1>
-    <p>靜下心來，默想您的問題，點擊按鈕抽取今日指引卡</p>
+    <p>靜下心來，選擇牌陣並默想您的問題</p>
   </div>
 
-  <div class="card-container">
-    <div class="card" id="tarotCard" onclick="drawCard()">
-      <div class="card-face card-back"></div>
-      <div class="card-face card-front">
-        <div class="card-title" id="cardTitle">牌卡名稱</div>
-        <div class="card-desc" id="cardDesc">點擊抽取看牌卡解析</div>
+  <div class="audio-control">
+    <span>🎵 心靈背景音樂：</span>
+    <button class="audio-btn" onclick="toggleAudio()" id="audioBtn">開啟音樂</button>
+  </div>
+
+  <!-- 牌陣選擇 -->
+  <div class="spread-selector">
+    <button class="spread-btn active" onclick="setSpread(1)">每日單牌指引</button>
+    <button class="spread-btn" onclick="setSpread(3)">三張牌陣（過去/現在/未來）</button>
+    <button class="spread-btn" onclick="setSpread(7)">六芒星牌陣（全方位解析）</button>
+  </div>
+
+  <!-- 牌卡區 -->
+  <div class="cards-display" id="cardsContainer"></div>
+
+  <!-- 操作按鈕 -->
+  <div class="actions">
+    <button class="btn btn-draw" onclick="drawCards()">洗牌並抽牌</button>
+    <a href="https://line.me/R/ti/p/@878momxk" target="_blank" class="btn btn-line">聯繫珍芯晴 LINE 預約解析</a>
+  </div>
+
+  <!-- 解讀指引 -->
+  <div class="reading-box" id="readingBox">
+    <h2>✦ 牌卡解讀與靈魂指引 ✦</h2>
+    <div id="readingContent"></div>
+  </div>
+
+  <!-- 留言板 -->
+  <div class="comment-section">
+    <h3>💬 靈魂迴響與留言預約</h3>
+    <div class="comment-form">
+      <input type="text" id="cName" class="comment-input" placeholder="您的暱稱">
+      <textarea id="cText" class="comment-textarea" rows="3" placeholder="留下您的感想（如：太準了！），或寫下想預約諮詢的問題..."></textarea>
+      <button class="btn btn-draw" style="padding: 8px 15px; align-self: flex-end;" onclick="addComment()">送出留言</button>
+    </div>
+    <div class="comment-list" id="commentList">
+      <div class="comment-card">
+        <div class="comment-name">小晴</div>
+        <div>抽到的牌真的講中我最近的焦慮，謝謝珍芯晴的指引！</div>
       </div>
     </div>
   </div>
 
-  <div class="actions">
-    <button class="btn btn-draw" onclick="drawCard()">重新抽牌</button>
-    <a href="https://line.me" target="_blank" class="btn btn-line">聯繫珍芯晴 LINE</a>
-  </div>
-
   <script>
-    const cards = [
-      { title: "星星 (The Star)", desc: "代表希望、心靈療癒與靈感。保持信心，宇宙正在為您指引正確的方向。" },
-      { title: "太陽 (The Sun)", desc: "象徵成功、活力與喜悅。前方一片光明，您所付出的努力即將收穫美好的成果。" },
-      { title: "命運之輪 (Wheel of Fortune)", desc: "代表轉機、幸運與新的週期。抱持開放的心態迎接收獲與改變。" },
-      { title: "女祭司 (The High Priestess)", desc: "象徵直覺、內在智慧與平靜。請相信您的內在直覺，靜心聽取心靈聲音。" },
-      { title: "力量 (Strength)", desc: "代表勇氣、耐心與溫柔的力量。展現內心的堅韌，無懼任何挑戰。" }
+    const tarotDeck = [
+      { name: "0 愚者 (The Fool)", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg", desc: "象徵新的開始、冒險與無限可能。保持開放與純真的心擁抱未知。" },
+      { name: "I 魔術師 (The Magician)", img: "https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg", desc: "代表創造力、資源整合與行動力。您已具備實現目標的所有工具。" },
+      { name: "II 女祭司 (The High Priestess)", img: "https://upload.wikimedia.org/wikipedia/commons/8/88/RWS_Tarot_02_High_Priestess.jpg", desc: "象徵直覺、內在智慧與平靜。靜下心來聽取您內心深處的聲音。" },
+      { name: "III 皇后 (The Empress)", img: "https://upload.wikimedia.org/wikipedia/commons/d/d2/RWS_Tarot_03_Empress.jpg", desc: "代表豐盛、滋養與無條件的愛。享受生活中的美好與創造成果。" },
+      { name: "IV 皇帝 (The Emperor)", img: "https://upload.wikimedia.org/wikipedia/commons/c/c3/RWS_Tarot_04_Emperor.jpg", desc: "象徵秩序、領導力與穩固建立。運用理性與規範邁向明確目標。" },
+      { name: "X 命運之輪 (Wheel of Fortune)", img: "https://upload.wikimedia.org/wikipedia/commons/3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg", desc: "代表轉機、幸運與循環週期。順應順境與逆境的流動，迎接新契機。" },
+      { name: "XVII 星星 (The Star)", img: "https://upload.wikimedia.org/wikipedia/commons/d/db/RWS_Tarot_17_Star.jpg", desc: "象徵希望、靈感與療癒能量。宇宙正為您照亮前行的光芒。" },
+      { name: "XIX 太陽 (The Sun)", img: "https://upload.wikimedia.org/wikipedia/commons/1/17/RWS_Tarot_19_Sun.jpg", desc: "代表成功、活力與充滿希望的光明。您的真心付出終將收穫豐碩。" }
     ];
 
-    function drawCard() {
-      const card = document.getElementById('tarotCard');
-      const title = document.getElementById('cardTitle');
-      const desc = document.getElementById('cardDesc');
-      
-      card.classList.remove('flipped');
-      
-      setTimeout(() => {
-        const randomIndex = Math.floor(Math.random() * cards.length);
-        title.innerText = cards[randomIndex].title;
-        desc.innerText = cards[randomIndex].desc;
-        card.classList.add('flipped');
-      }, 400);
+    const spreadLabels = {
+      1: ["今日指引"],
+      3: ["過去影響", "現在狀態", "未來趨勢"],
+      7: ["過去經驗", "現在問題", "未來發展", "建議對策", "周遭環境", "希望或恐懼", "最終結果"]
+    };
+
+    let currentCount = 1;
+
+    function setSpread(count) {
+      currentCount = count;
+      document.querySelectorAll('.spread-btn').forEach((btn, idx) => {
+        btn.classList.toggle('active', (count===1 && idx===0)||(count===3 && idx===1)||(count===7 && idx===2));
+      });
+      initCards();
     }
+
+    function initCards() {
+      const container = document.getElementById('cardsContainer');
+      document.getElementById('readingBox').style.display = 'none';
+      container.innerHTML = '';
+      const labels = spreadLabels[currentCount];
+      
+      for(let i=0; i<currentCount; i++) {
+        container.innerHTML += `
+          <div class="card-item">
+            <div class="card-label">${labels[i]}</div>
+            <div class="card" onclick="flipCard(this, ${i})">
+              <div class="card-inner">
+                <div class="card-face card-back"></div>
+                <div class="card-face card-front" id="front-${i}"></div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    let currentDrawn = [];
+
+    function drawCards() {
+      initCards();
+      currentDrawn = [];
+      let shuffled = [...tarotDeck].sort(() => 0.5 - Math.random());
+      
+      for(let i=0; i<currentCount; i++) {
+        currentDrawn.push(shuffled[i]);
+        document.getElementById(`front-${i}`).innerHTML = `<img src="${shuffled[i].img}" alt="${shuffled[i].name}">`;
+      }
+
+      setTimeout(() => {
+        document.querySelectorAll('.card').forEach(c => c.classList.add('flipped'));
+        showReading();
+      }, 300);
+    }
+
+    function showReading() {
+      const box = document.getElementById('readingBox');
+      const content = document.getElementById('readingContent');
+      const labels = spreadLabels[currentCount];
+      let html = '';
+
+      currentDrawn.forEach((card, i) => {
+        html += `
+          <div class="reading-item">
+            <strong>【${labels[i]}】${card.name}</strong><br>
+            ${card.desc}
+          </div>
+        `;
+      });
+
+      content.innerHTML = html;
+      box.style.display = 'block';
+    }
+
+    function toggleAudio() {
+      const bgm = document.getElementById('bgm');
+      const btn = document.getElementById('audioBtn');
+      if (bgm.paused) {
+        bgm.play();
+        btn.innerText = "靜音音樂";
+      } else {
+        bgm.pause();
+        btn.innerText = "開啟音樂";
+      }
+    }
+
+    function addComment() {
+      const name = document.getElementById('cName').value || "匿名訪客";
+      const text = document.getElementById('cText').value;
+      if(!text) return alert("請輸入留言內容！");
+      
+      const list = document.getElementById('commentList');
+      list.innerHTML = `
+        <div class="comment-card">
+          <div class="comment-name">${name}</div>
+          <div>${text}</div>
+        </div>
+      ` + list.innerHTML;
+
+      document.getElementById('cName').value = '';
+      document.getElementById('cText').value = '';
+    }
+
+    // 初始化載入
+    initCards();
   </script>
 </body>
 </html>
