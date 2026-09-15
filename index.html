@@ -1,56 +1,177 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的個人網頁</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .card {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 400px;
-        }
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        p {
-            color: #7f8c8d;
-            line-height: 1.6;
-        }
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #3498db;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: background 0.3s;
-        }
-        .btn:hover {
-            background-color: #2980b9;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>珍芯晴 - 神秘塔羅占卜</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .header h1 {
+      font-size: 2.2rem;
+      letter-spacing: 2px;
+      color: #f39c12;
+      text-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
+      margin-bottom: 10px;
+    }
+    .header p {
+      color: #bdc3c7;
+      font-size: 1rem;
+    }
+    .card-container {
+      perspective: 1000px;
+      margin-bottom: 30px;
+    }
+    .card {
+      width: 200px;
+      height: 340px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+    }
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #f39c12;
+      padding: 20px;
+      text-align: center;
+    }
+    .card-back {
+      background: linear-gradient(135deg, #2c3e50, #4a00e0);
+    }
+    .card-back::after {
+      content: '✦';
+      font-size: 3rem;
+      color: #f39c12;
+    }
+    .card-front {
+      background: #ffffff;
+      color: #2c3e50;
+      transform: rotateY(180deg);
+    }
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #8e44ad;
+    }
+    .card-desc {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #34495e;
+    }
+    .actions {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      padding: 12px 28px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-weight: bold;
+    }
+    .btn-draw {
+      background: linear-gradient(45deg, #f39c12, #e67e22);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+    }
+    .btn-draw:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(243, 156, 18, 0.6);
+    }
+    .btn-line {
+      background: #06c755;
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(6, 199, 85, 0.4);
+    }
+    .btn-line:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(6, 199, 85, 0.6);
+    }
+  </style>
 </head>
 <body>
-    <div class="card">
-        <h1>歡迎來到我的網頁</h1>
-        <p>這是我透過 GitHub Pages 成功發布的第一個網頁！</p>
-       <button class="btn" onclick="alert('歡迎來到珍芯晴！這裡可以寫您的介紹內容。')">了解更多</button>
+
+  <div class="header">
+    <h1>珍芯晴 ✦ 塔羅靈魂指引</h1>
+    <p>靜下心來，默想您的問題，點擊按鈕抽取今日指引卡</p>
+  </div>
+
+  <div class="card-container">
+    <div class="card" id="tarotCard" onclick="drawCard()">
+      <div class="card-face card-back"></div>
+      <div class="card-face card-front">
+        <div class="card-title" id="cardTitle">牌卡名稱</div>
+        <div class="card-desc" id="cardDesc">點擊抽取看牌卡解析</div>
+      </div>
     </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-draw" onclick="drawCard()">重新抽牌</button>
+    <a href="https://line.me" target="_blank" class="btn btn-line">聯繫珍芯晴 LINE</a>
+  </div>
+
+  <script>
+    const cards = [
+      { title: "星星 (The Star)", desc: "代表希望、心靈療癒與靈感。保持信心，宇宙正在為您指引正確的方向。" },
+      { title: "太陽 (The Sun)", desc: "象徵成功、活力與喜悅。前方一片光明，您所付出的努力即將收穫美好的成果。" },
+      { title: "命運之輪 (Wheel of Fortune)", desc: "代表轉機、幸運與新的週期。抱持開放的心態迎接收獲與改變。" },
+      { title: "女祭司 (The High Priestess)", desc: "象徵直覺、內在智慧與平靜。請相信您的內在直覺，靜心聽取心靈聲音。" },
+      { title: "力量 (Strength)", desc: "代表勇氣、耐心與溫柔的力量。展現內心的堅韌，無懼任何挑戰。" }
+    ];
+
+    function drawCard() {
+      const card = document.getElementById('tarotCard');
+      const title = document.getElementById('cardTitle');
+      const desc = document.getElementById('cardDesc');
+      
+      card.classList.remove('flipped');
+      
+      setTimeout(() => {
+        const randomIndex = Math.floor(Math.random() * cards.length);
+        title.innerText = cards[randomIndex].title;
+        desc.innerText = cards[randomIndex].desc;
+        card.classList.add('flipped');
+      }, 400);
+    }
+  </script>
 </body>
 </html>
