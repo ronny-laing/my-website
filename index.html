@@ -3,294 +3,1599 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>珍芯晴 ✦ 神秘塔羅靈魂指引</title>
+  <title>珍芯晴芳香學院 Cistus Aroma Academy | 自然療癒 × 精緻美學</title>
+  
+  <!-- Google Fonts: Noto Serif TC & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    /* ==========================================
+       品牌視覺變數 (Visual Identity Variables)
+       ========================================== */
+    :root {
+      --color-primary-pink: #F0CBC0;     /* 主色：粉紅 (溫柔與療癒) */
+      --color-cocoa: #7A6A60;            /* 輔色：可可 (自然、沉穩、專業) */
+      --color-warm-orange: #FABF84;       /* 強調色：暖橘 (陽光、生命力) */
+      --color-bg-light: #FAF6F3;          /* 暖白柔焦背景 */
+      --color-white: #FFFFFF;
+      --color-text-main: #4A3E39;        /* 深木質高對比內文 */
+      --color-text-muted: #8C7B73;
+      --font-serif: 'Noto Serif TC', serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --shadow-soft: 0 15px 35px rgba(122, 106, 96, 0.08);
+      --shadow-hover: 0 20px 40px rgba(122, 106, 96, 0.15);
+      --radius-lg: 20px;
+      --radius-md: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 30px 15px;
+      font-family: var(--font-sans);
+      background-color: var(--color-bg-light);
+      color: var(--color-text-main);
+      line-height: 1.8;
       overflow-x: hidden;
     }
-    .header { text-align: center; margin-bottom: 25px; }
-    .header h1 {
-      font-size: 2.2rem;
-      color: #f39c12;
-      text-shadow: 0 0 12px rgba(243, 156, 18, 0.6);
-      margin-bottom: 8px;
+
+    h1, h2, h3, h4, .brand-font {
+      font-family: var(--font-serif);
+      color: var(--color-cocoa);
     }
-    .header p { color: #bdc3c7; font-size: 0.95rem; }
-    
-    /* 音樂播放控制 */
-    .audio-control {
-      margin-bottom: 20px;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+    }
+
+    /* Top Bar 導覽列 */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(250, 246, 243, 0.98);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(240, 203, 192, 0.4);
+      z-index: 1000;
+      padding: 0.8rem 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo img {
+      height: 52px;
+      max-width: 240px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--color-cocoa);
+      position: relative;
+      padding: 6px 0;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background-color: var(--color-warm-orange);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .btn-student-zone {
+      background: linear-gradient(135deg, var(--color-primary-pink), var(--color-warm-orange));
+      color: var(--color-cocoa) !important;
+      font-weight: 600 !important;
+      padding: 8px 20px !important;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(250, 191, 132, 0.3);
+    }
+
+    .mobile-toggle {
+      display: none;
+      font-size: 1.5rem;
+      color: var(--color-cocoa);
+      cursor: pointer;
+    }
+
+    /* 首頁 Banner (修復人物頭部與 Logo 遮蓋問題) */
+    .hero-banner {
+      margin-top: 75px;
+      width: 100%;
+      min-height: 480px;
+      max-height: 650px;
+      height: 60vh;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(135deg, var(--color-primary-pink), var(--color-warm-orange));
+    }
+
+    .hero-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center; /* 關鍵修正：置頂呈現，確保人物頭頂與Logo完整呈現 */
+      display: block;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 3.5rem 2rem 2.2rem;
+      background: linear-gradient(180deg, transparent 0%, rgba(74, 62, 57, 0.82) 100%);
+      color: var(--color-white);
+      text-align: center;
+    }
+
+    .hero-overlay h1 {
+      color: var(--color-white);
+      font-size: 2.6rem;
+      margin-bottom: 0.6rem;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .hero-overlay p {
+      font-size: 1.15rem;
+      opacity: 0.95;
+      text-shadow: 0 1px 5px rgba(0,0,0,0.3);
+    }
+
+    /* Section 通用 */
+    section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-header h2 {
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-header h2::after {
+      content: '';
+      display: block;
+      width: 50%;
+      height: 3px;
+      background: var(--color-warm-orange);
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    .section-header p {
+      color: var(--color-text-muted);
+      font-size: 1.05rem;
+    }
+
+    /* 學院理念 */
+    .about-card {
+      background: var(--color-white);
+      padding: 3rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(240, 203, 192, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .about-top-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .about-img-box {
+      width: 100%;
+      min-height: 320px;
+      background: rgba(240, 203, 192, 0.2);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .about-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .about-text h3 {
+      font-size: 2.1rem;
+      margin-bottom: 1.2rem;
+      color: var(--color-cocoa);
+    }
+
+    .about-text p {
+      margin-bottom: 1.2rem;
+      color: var(--color-text-main);
+      font-size: 1.02rem;
+      line-height: 1.85;
+    }
+
+    .about-concept-img {
+      width: 100%;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      background: rgba(250, 191, 132, 0.15);
+      padding: 10px;
+    }
+
+    .about-concept-img img {
+      width: 100%;
+      max-height: 520px;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* 8大實戰 AI 技能卡片 */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .skill-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid rgba(240, 203, 192, 0.4);
+      box-shadow: var(--shadow-soft);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--color-warm-orange);
+    }
+
+    .skill-card-img-wrapper {
+      width: 100%;
+      height: 220px;
+      background: rgba(240, 203, 192, 0.25);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+
+    .skill-card-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .skill-card-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .skill-level-badge {
+      display: inline-block;
+      background: var(--color-primary-pink);
+      color: var(--color-cocoa);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 12px;
+      margin-bottom: 0.8rem;
+      width: fit-content;
+    }
+
+    .skill-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .skill-card p {
+      font-size: 0.92rem;
+      color: var(--color-text-muted);
+      margin-bottom: 1.2rem;
+    }
+
+    .skill-btn {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--color-cocoa);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* 珍芯晴專屬豐盛圓滿花晶 */
+    .flower-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+    }
+
+    .flower-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(240, 203, 192, 0.4);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .flower-card:nth-child(even) {
+      direction: rtl;
+    }
+
+    .flower-card:nth-child(even) .flower-info,
+    .flower-card:nth-child(even) .flower-media {
+      direction: ltr;
+    }
+
+    .flower-media {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .flower-img-box {
+      width: 100%;
+      height: 220px;
+      background: rgba(240, 203, 192, 0.25);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      padding: 10px;
+    }
+
+    .flower-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .flower-video-box video {
+      width: 100%;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-soft);
+      background-color: #000;
+    }
+
+    .flower-info h3 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .flower-subtitle {
+      color: var(--color-warm-orange);
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .flower-desc {
+      font-size: 0.98rem;
+      color: var(--color-text-main);
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+    }
+
+    .btn-product-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-cocoa);
+      color: var(--color-white);
+      padding: 10px 22px;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    /* 學員專區 */
+    .student-tab-nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 10px 24px;
+      border-radius: 30px;
+      border: 1px solid var(--color-primary-pink);
+      background: transparent;
+      color: var(--color-cocoa);
+      font-size: 0.98rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--color-cocoa);
+      color: var(--color-white);
+      border-color: var(--color-cocoa);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* 部落格文章卡片 */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .blog-card {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(240, 203, 192, 0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .blog-body {
+      padding: 1.5rem;
+    }
+
+    .blog-meta {
+      font-size: 0.85rem;
+      color: var(--color-warm-orange);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .blog-title {
+      font-size: 1.15rem;
+      margin-bottom: 0.8rem;
+      line-height: 1.4;
+    }
+
+    .blog-text {
+      font-size: 0.92rem;
+      color: var(--color-text-muted);
+      margin-bottom: 1.2rem;
+    }
+
+    .blog-source {
+      padding: 0.8rem 1.5rem;
+      background: var(--color-bg-light);
+      border-top: 1px solid rgba(240, 203, 192, 0.3);
+      font-size: 0.85rem;
+    }
+
+    .blog-source a {
+      color: var(--color-cocoa);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Q&A 常見問題區塊 */
+    .qa-container {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .qa-item {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(240, 203, 192, 0.4);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .qa-question {
+      padding: 1.2rem 1.5rem;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--color-cocoa);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--color-white);
+    }
+
+    .qa-question i {
+      color: var(--color-warm-orange);
+      transition: transform 0.3s ease;
+    }
+
+    .qa-answer {
+      padding: 0 1.5rem 1.2rem;
+      color: var(--color-text-main);
+      font-size: 0.98rem;
+      line-height: 1.8;
+      border-top: 1px dashed rgba(240, 203, 192, 0.3);
+      padding-top: 1rem;
+    }
+
+    /* 學員留言板 & 註冊狀態 */
+    .board-container {
+      max-width: 850px;
+      margin: 0 auto;
+      background: var(--color-white);
+      padding: 2.5rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .student-status-bar {
+      background: var(--color-bg-light);
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(240, 203, 192, 0.4);
+    }
+
+    .student-user-info {
       display: flex;
       align-items: center;
       gap: 10px;
-      background: rgba(255,255,255,0.1);
-      padding: 8px 18px;
+      font-weight: 600;
+      color: var(--color-cocoa);
+    }
+
+    .btn-auth {
+      background: var(--color-warm-orange);
+      color: var(--color-cocoa);
+      border: none;
+      padding: 6px 18px;
       border-radius: 20px;
-    }
-    .audio-btn {
-      background: #f39c12; color: #000; border: none; padding: 5px 12px;
-      border-radius: 12px; cursor: pointer; font-weight: bold;
-    }
-
-    /* 牌陣選擇按鈕 */
-    .spread-selector {
-      display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center;
-    }
-    .spread-btn {
-      padding: 10px 20px; border: 1px solid #f39c12; background: rgba(0,0,0,0.5);
-      color: #f39c12; border-radius: 20px; cursor: pointer; transition: all 0.3s;
-    }
-    .spread-btn.active, .spread-btn:hover {
-      background: #f39c12; color: #000; font-weight: bold;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
     }
 
-    /* 牌卡展示區 */
-    .cards-display {
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;
-      max-width: 1000px; width: 100%; margin-bottom: 40px;
+    .comment-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px dashed rgba(122, 106, 96, 0.25);
     }
-    .card-item {
-      display: flex; flex-direction: column; align-items: center; width: 160px;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
-    .card-label { margin-bottom: 8px; color: #f1c40f; font-size: 0.9rem; }
-    .card {
-      width: 150px; height: 260px; perspective: 1000px; cursor: pointer;
+
+    .form-group label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-cocoa);
     }
-    .card-inner {
-      width: 100%; height: 100%; position: relative;
-      transform-style: preserve-3d; transition: transform 0.8s;
-      border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+
+    .form-control {
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(122, 106, 96, 0.2);
+      font-family: inherit;
+      background-color: var(--color-bg-light);
     }
-    .card.flipped .card-inner { transform: rotateY(180deg); }
-    .card-face {
-      position: absolute; width: 100%; height: 100%;
-      backface-visibility: hidden; border-radius: 10px; border: 2px solid #f39c12;
+
+    .btn-submit {
+      background: var(--color-cocoa);
+      color: var(--color-white);
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .comment-item {
+      background: var(--color-bg-light);
+      padding: 1.2rem;
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--color-primary-pink);
+      margin-bottom: 1.2rem;
+    }
+
+    .comment-badge {
+      display: inline-block;
+      background: var(--color-warm-orange);
+      color: var(--color-cocoa);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: 8px;
+    }
+
+    .comment-reply {
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: rgba(240, 203, 192, 0.25);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--color-cocoa);
+    }
+
+    /* Modal 彈窗 */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(74, 62, 57, 0.68);
+      backdrop-filter: blur(6px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 1.5rem;
+    }
+
+    .modal-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      max-width: 820px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.22);
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.5rem;
+      font-size: 1.8rem;
+      color: var(--color-cocoa);
+      cursor: pointer;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.9);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-banner-box {
+      width: 100%;
+      min-height: 250px;
+      max-height: 420px;
+      background: var(--color-bg-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
+      padding: 15px;
+      border-bottom: 1px solid rgba(240, 203, 192, 0.4);
     }
-    .card-back {
-      background: linear-gradient(135deg, #2c3e50, #4a00e0);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .card-back::after { content: '✦'; font-size: 2.5rem; color: #f39c12; }
-    .card-front {
-      background: #fff; color: #000; transform: rotateY(180deg);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-    }
-    .card-front img { width: 100%; height: 100%; object-fit: cover; }
-    
-    /* 牌卡解析卡片 */
-    .reading-box {
-      background: rgba(255, 255, 255, 0.08); border-radius: 15px;
-      padding: 25px; max-width: 800px; width: 100%; margin-bottom: 40px;
-      border: 1px solid rgba(243, 156, 18, 0.3); display: none;
-    }
-    .reading-box h2 { color: #f39c12; margin-bottom: 15px; font-size: 1.4rem; text-align: center; }
-    .reading-item { margin-bottom: 12px; border-bottom: 1px dashed rgba(255,255,255,0.2); padding-bottom: 10px; }
-    .reading-item strong { color: #f1c40f; }
 
-    /* 按鈕區 */
-    .actions { display: flex; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; justify-content: center; }
-    .btn {
-      padding: 12px 30px; border-radius: 25px; text-decoration: none;
-      font-weight: bold; border: none; cursor: pointer; transition: 0.3s;
+    .modal-banner-box img {
+      width: 100%;
+      max-height: 380px;
+      object-fit: contain;
     }
-    .btn-draw { background: linear-gradient(45deg, #f39c12, #e67e22); color: #fff; }
-    .btn-line { background: #06c755; color: #fff; }
 
-    /* 互動留言區 */
-    .comment-section {
-      background: rgba(0,0,0,0.4); border-radius: 15px; padding: 25px;
-      max-width: 800px; width: 100%; border: 1px solid #333;
+    .modal-content {
+      padding: 2.2rem;
     }
-    .comment-section h3 { color: #f39c12; margin-bottom: 15px; }
-    .comment-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-    .comment-input, .comment-textarea {
-      padding: 10px; border-radius: 8px; border: 1px solid #555; background: #222; color: #fff;
+
+    .modal-detail-block {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
     }
-    .comment-list { display: flex; flex-direction: column; gap: 10px; }
-    .comment-card { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; font-size: 0.9rem; }
-    .comment-name { color: #f1c40f; font-weight: bold; margin-bottom: 4px; }
+
+    .modal-section-item {
+      background: var(--color-bg-light);
+      padding: 1.2rem;
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--color-warm-orange);
+    }
+
+    .modal-section-item h4 {
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-actions {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px dashed rgba(122, 106, 96, 0.25);
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-modal-action {
+      flex: 1;
+      min-width: 220px;
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-line {
+      background-color: #06C755;
+      color: #FFFFFF !important;
+    }
+
+    .btn-website {
+      background-color: var(--color-cocoa);
+      color: #FFFFFF !important;
+    }
+
+    footer {
+      background: var(--color-cocoa);
+      color: var(--color-white);
+      text-align: center;
+      padding: 3rem 2rem;
+      margin-top: 5rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--color-bg-light);
+        flex-direction: column;
+        padding: 2rem;
+      }
+      
+      .nav-links.active {
+        display: flex;
+      }
+
+      .mobile-toggle {
+        display: block;
+      }
+
+      .about-top-grid, .flower-card {
+        grid-template-columns: 1fr;
+      }
+
+      .flower-card:nth-child(even) {
+        direction: ltr;
+      }
+
+      .hero-banner {
+        height: 45vh;
+        min-height: 380px;
+      }
+
+      .hero-overlay h1 {
+        font-size: 1.8rem;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <!-- 背景音樂 -->
-  <audio id="bgm" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=meditation-spiritual-112191.mp3"></audio>
+  <!-- Top Bar -->
+  <header class="header">
+    <div class="nav-container">
+      <a href="#" class="brand-logo">
+        <img src="image/cistus-02-296x202.png" alt="珍芯晴芳香學院 Logo" onerror="tryImg(this, ['cistus-02-296x202.png', 'public/image/cistus-02-296x202.png', 'image/cistus-02-296x202.jpg'])">
+      </a>
 
-  <div class="header">
-    <h1>珍芯晴 ✦ 塔羅靈魂指引</h1>
-    <p>靜下心來，選擇牌陣並默想您的問題</p>
-  </div>
+      <div class="mobile-toggle" id="mobileToggle">
+        <i class="fas fa-bars"></i>
+      </div>
 
-  <div class="audio-control">
-    <span>🎵 心靈背景音樂：</span>
-    <button class="audio-btn" onclick="toggleAudio()" id="audioBtn">開啟音樂</button>
-  </div>
-
-  <!-- 牌陣選擇 -->
-  <div class="spread-selector">
-    <button class="spread-btn active" onclick="setSpread(1)">每日單牌指引</button>
-    <button class="spread-btn" onclick="setSpread(3)">三張牌陣（過去/現在/未來）</button>
-    <button class="spread-btn" onclick="setSpread(7)">六芒星牌陣（全方位解析）</button>
-  </div>
-
-  <!-- 牌卡區 -->
-  <div class="cards-display" id="cardsContainer"></div>
-
-  <!-- 操作按鈕 -->
-  <div class="actions">
-    <button class="btn btn-draw" onclick="drawCards()">洗牌並抽牌</button>
-    <a href="https://line.me/R/ti/p/@878momxk" target="_blank" class="btn btn-line">聯繫珍芯晴 LINE 預約解析</a>
-  </div>
-
-  <!-- 解讀指引 -->
-  <div class="reading-box" id="readingBox">
-    <h2>✦ 牌卡解讀與靈魂指引 ✦</h2>
-    <div id="readingContent"></div>
-  </div>
-
-  <!-- 留言板 -->
-  <div class="comment-section">
-    <h3>💬 靈魂迴響與留言預約</h3>
-    <div class="comment-form">
-      <input type="text" id="cName" class="comment-input" placeholder="您的暱稱">
-      <textarea id="cText" class="comment-textarea" rows="3" placeholder="留下您的感想（如：太準了！），或寫下想預約諮詢的問題..."></textarea>
-      <button class="btn btn-draw" style="padding: 8px 15px; align-self: flex-end;" onclick="addComment()">送出留言</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">學院理念</a></li>
+        <li><a href="#ai-skills">8大實戰AI技能</a></li>
+        <li><a href="#flower-crystal">珍芯晴專屬豐盛圓滿花晶</a></li>
+        <li><a href="#student-zone" class="btn-student-zone"><i class="fas fa-graduation-cap"></i> 學員專區</a></li>
+      </ul>
     </div>
-    <div class="comment-list" id="commentList">
-      <div class="comment-card">
-        <div class="comment-name">小晴</div>
-        <div>抽到的牌真的講中我最近的焦慮，謝謝珍芯晴的指引！</div>
+  </header>
+
+  <!-- 首頁形象大圖 (優化置頂對齊，人物與Logo完全顯示) -->
+  <div class="hero-banner">
+    <img src="image/page1.png" alt="珍芯晴首頁形象大圖" onerror="tryImg(this, ['page1.png', 'public/image/page1.png', 'image/page1.jpg'])">
+    <div class="hero-overlay">
+      <h1>珍芯晴芳香學院</h1>
+      <p>自然療癒 × 精緻美學 x AI 實戰技能--科學與療癒的實戰落地學習平台</p>
+    </div>
+  </div>
+
+  <!-- 學院理念 -->
+  <section id="about">
+    <div class="section-header">
+      <h2>學院理念</h2>
+      <p>自然療癒與心靈萬物的柔和連結</p>
+    </div>
+
+    <div class="about-card">
+      <div class="about-top-grid">
+        <div class="about-img-box">
+          <img src="image/CISTUSbranding.png" alt="珍芯晴品牌故事" onerror="tryImg(this, ['CISTUSbranding.png', 'public/image/CISTUSbranding.png', 'image/CISTUSbranding.jpg'])">
+        </div>
+        <div class="about-text">
+          <h3>寵愛.精緻美學.落地實現</h3>
+          <p>珍芯晴芳香學院專為美業店家、美學師與身心靈導師打造全方位的賦能學習平台。我們深信，極致的服務來自於「深度寵愛顧客」與「自然美學」的完美結合。</p>
+          <p>透過高頻花晶的自然療癒能量，搭配最前瞻的科學化 AI 實戰落地技能，協助您將獨特的美學涵養與專業技術發揮極致。從自動化客製對焦、品牌質感提升到全方位服務升級，完美符合現代人對身心紓壓與高級質感事業的雙重訴求。</p>
+        </div>
+      </div>
+
+      <div class="about-concept-img">
+        <img src="image/page1.png" alt="珍芯晴美學概念圖" onerror="tryImg(this, ['page1.png', 'public/image/page1.png', 'image/page1.jpg'])">
+      </div>
+    </div>
+  </section>
+
+  <!-- 8大實戰 AI 技能 -->
+  <section id="ai-skills">
+    <div class="section-header">
+      <h2>8 大實戰 AI 技能</h2>
+      <p>賦能美學與療癒產業，打造現代化極致服務系統</p>
+    </div>
+
+    <div class="skills-grid">
+      <!-- LEVEL 1 -->
+      <div class="skill-card" onclick="openSkillModal(1)">
+        <div class="skill-card-img-wrapper">
+          <img src="image/level1.png" alt="LEVEL 1 AI文案力" onerror="tryImg(this, ['level1.png', 'public/image/level1.png', 'image/level1.jpg'])">
+        </div>
+        <div class="skill-card-body">
+          <div>
+            <span class="skill-level-badge">LEVEL 1 AI文案力</span>
+            <h3>AI幫我工作</h3>
+            <p>掌握 ChatGPT 提問邏輯與 Prompt 工程學，自動化撰寫高質感品牌文案與日常工作報告。</p>
+          </div>
+          <div class="skill-btn">查看詳細課程說明與成果 <i class="fas fa-arrow-right"></i></div>
+        </div>
+      </div>
+
+      <!-- LEVEL 2 -->
+      <div class="skill-card" onclick="openSkillModal(2)">
+        <div class="skill-card-img-wrapper">
+          <img src="image/level2.png" alt="LEVEL 2 AI視覺力" onerror="tryImg(this, ['level2.png', 'public/image/level2.png', 'image/level2.jpg'])">
+        </div>
+        <div class="skill-card-body">
+          <div>
+            <span class="skill-level-badge">LEVEL 2 AI視覺力</span>
+            <h3>AI視覺設計</h3>
+            <p>掌控 AI 圖像生成技術，輕鬆打造符合高級 SPA 柔焦暖光風格之品牌形象圖。</p>
+          </div>
+          <div class="skill-btn">查看詳細課程說明與成果 <i class="fas fa-arrow-right"></i></div>
+        </div>
+      </div>
+
+      <!-- LEVEL 3 -->
+      <div class="skill-card" onclick="openSkillModal(3)">
+        <div class="skill-card-img-wrapper">
+          <img src="image/level3.png" alt="LEVEL 3 AI影音力" onerror="tryImg(this, ['level3.png', 'public/image/level3.png', 'image/level3.jpg'])">
+        </div>
+        <div class="skill-card-body">
+          <div>
+            <span class="skill-level-badge">LEVEL 3 AI影音力</span>
+            <h3>AI影音創作</h3>
+            <p>結合 AI 腳本生成、溫柔系語音與剪輯，快速產出引發情緒共鳴的療癒短影音。</p>
+          </div>
+          <div class="skill-btn">查看詳細課程說明與成果 <i class="fas fa-arrow-right"></i></div>
+        </div>
+      </div>
+
+      <!-- LEVEL 4 -->
+      <div class="skill-card" onclick="openSkillModal(4)">
+        <div class="skill-card-img-wrapper">
+          <img src="image/level4.png" alt="LEVEL 4 AI諮詢力" onerror="tryImg(this, ['level4.png', 'public/image/level4.png', 'image/level4.jpg'])">
+        </div>
+        <div class="skill-card-body">
+          <div>
+            <span class="skill-level-badge">LEVEL 4 AI諮詢力</span>
+            <h3>AI牌卡與身心諮詢</h3>
+            <p>結合隙晶花藏牌卡系統建置 AI 諮詢小幫手，系統化紀錄身心狀態並給予專屬建議。</p>
+          </div>
+          <div class="skill-btn">查看詳細課程說明與成果 <i class="fas fa-arrow-right"></i></div>
+        </div>
+      </div>
+
+      <!-- LEVEL 5 -->
+      <div class="skill-card" onclick="openSkillModal(5)">
+        <div class="skill-card-img-wrapper">
+          <img src="image/level5.png" alt="LEVEL 5 AI教學力" onerror="tryImg(this, ['level5.png', 'public/image/level5.png', 'image/level5.jpg'])">
+        </div>
+        <div class="skill-card-body">
+          <div>
+            <span class="skill-level-badge">LEVEL 5 AI教學力</span>
+            <h3>AI課程與講義架構</h3>
+            <p>運用 AI 自動整理芳療文獻與學術知識，一鍵架構結構化認證課程與教學手冊。</p>
+          </div>
+          <div class="skill-btn">查看詳細課程說明與成果 <i class="fas fa-arrow-right"></i></div>
+        </div>
+      </div>
+
+      <!-- LEVEL 6 -->
+      <div class="skill-card" onclick="openSkillModal(6)">
+        <div class="skill-card-img-wrapper">
+          <img src="image/level6.png" alt="LEVEL 6 AI自動化" onerror="tryImg(this, ['level6.png', 'public/image/level6.png', 'image/level6.jpg'])">
+        </div>
+        <div class="skill-card-body">
+          <div>
+            <span class="skill-level-badge">LEVEL 6 AI自動化</span>
+            <h3>AI工作流自動化</h3>
+            <p>串接 Tally 與 Make 工作流，達成報名資料彙整與研習證書 PDF 自動化寄送。</p>
+          </div>
+          <div class="skill-btn">查看詳細課程說明與成果 <i class="fas fa-arrow-right"></i></div>
+        </div>
+      </div>
+
+      <!-- LEVEL 7 -->
+      <div class="skill-card" onclick="openSkillModal(7)">
+        <div class="skill-card-img-wrapper">
+          <img src="image/level7.png" alt="LEVEL 7 AI行銷力" onerror="tryImg(this, ['level7.png', 'public/image/level7.png', 'image/level7.jpg'])">
+        </div>
+        <div class="skill-card-body">
+          <div>
+            <span class="skill-level-badge">LEVEL 7 AI行銷力</span>
+            <h3>AI精準行銷與市場洞察</h3>
+            <p>洞察市場趨勢與受眾痛點，自動生成高轉換率之廣告文案與精準行銷推播。</p>
+          </div>
+          <div class="skill-btn">查看詳細課程說明與成果 <i class="fas fa-arrow-right"></i></div>
+        </div>
+      </div>
+
+      <!-- LEVEL 8 -->
+      <div class="skill-card" onclick="openSkillModal(8)">
+        <div class="skill-card-img-wrapper">
+          <img src="image/level8.png" alt="LEVEL 8 AI成為你的合夥人" onerror="tryImg(this, ['level8.png', 'public/image/level8.png', 'image/level8.jpg'])">
+        </div>
+        <div class="skill-card-body">
+          <div>
+            <span class="skill-level-badge">LEVEL 8 AI成為你的合夥人</span>
+            <h3>AI商業合夥與全自動營運</h3>
+            <p>將 AI 升級為事業合夥人，從個人品牌包裝、花晶諮詢到全自動預約 Portal 構建。</p>
+          </div>
+          <div class="skill-btn">查看詳細課程說明與成果 <i class="fas fa-arrow-right"></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 珍芯晴專屬豐盛圓滿花晶 (已對應最新簡潔影片檔名) -->
+  <section id="flower-crystal">
+    <div class="section-header">
+      <h2>珍芯晴專屬豐盛圓滿花晶</h2>
+      <p>純淨高頻花晶與彩光能量，開啟身心平衡與豐盛顯化</p>
+    </div>
+
+    <div class="flower-grid">
+      <!-- 1. 神聖之光 -->
+      <div class="flower-card">
+        <div class="flower-info">
+          <h3>神聖之光</h3>
+          <div class="flower-subtitle">創意靈感湧現 • 顱內深層淨化</div>
+          <p class="flower-desc">專為現代人設計的光療頭部紓壓。卸下緊繃頭壓，體驗「純淨白光」的顱內淨化 SPA。深層釋放緊繃頭皮與筋膜壓力、平衡自律神經，幫助夜夜多夢淺眠者找回沉靜安穩好眠。</p>
+          <a href="https://www.cistusaroma.com/index.php?route=product/product&product_id=352&search=%E8%8A%B1%E6%99%B6" target="_blank" class="btn-product-link"><i class="fas fa-shopping-bag"></i> 前往官網查看 神聖之光</a>
+        </div>
+        <div class="flower-media">
+          <div class="flower-img-box">
+            <img src="image/FLOWER.png" alt="神聖之光 花晶" onerror="tryImg(this, ['FLOWER.png', 'public/image/FLOWER.png', 'image/FLOWER.jpg'])">
+          </div>
+          <div class="flower-video-box">
+            <video controls preload="metadata">
+              <source src="video/light.mp4" type="video/mp4">
+              您的瀏覽器不支援影片播放。
+            </video>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 財富之鑰 -->
+      <div class="flower-card">
+        <div class="flower-info">
+          <h3>財富之鑰</h3>
+          <div class="flower-subtitle">帶來和諧豐盛的財富頻率 • 開啟高頻顯化</div>
+          <p class="flower-desc">突破事業與人生瓶頸，你只差這一把鑰匙！開啟高頻豐盛能量場，主題為「我願意接收豐盛」。適合創業與邁向事業新階段者，轉化金錢卡點與匱乏焦慮。</p>
+          <a href="https://www.cistusaroma.com/index.php?route=product/product&product_id=355&search=%E8%8A%B1%E6%99%B6" target="_blank" class="btn-product-link"><i class="fas fa-shopping-bag"></i> 前往官網查看 財富之鑰</a>
+        </div>
+        <div class="flower-media">
+          <div class="flower-img-box">
+            <img src="image/FLOWER.png" alt="財富之鑰 花晶" onerror="tryImg(this, ['FLOWER.png', 'public/image/FLOWER.png', 'image/FLOWER.jpg'])">
+          </div>
+          <div class="flower-video-box">
+            <video controls preload="metadata">
+              <source src="video/wealth-key.mp4" type="video/mp4">
+              您的瀏覽器不支援影片播放。
+            </video>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. 覺醒之心 -->
+      <div class="flower-card">
+        <div class="flower-info">
+          <h3>覺醒之心</h3>
+          <div class="flower-subtitle">身心覺察與心輪清理 • 我願意愛自己</div>
+          <p class="flower-desc">釋放胸口悶脹與情緒負擔，清理印記，回到慈悲與愛自己的核心力量。協助轉化原生家庭與親密關係印記，建立清晰的內在邊界與安全感。</p>
+          <a href="https://www.cistusaroma.com/index.php?route=product/product&product_id=351&search=%E8%8A%B1%E6%99%B6" target="_blank" class="btn-product-link"><i class="fas fa-shopping-bag"></i> 前往官網查看 覺醒之心</a>
+        </div>
+        <div class="flower-media">
+          <div class="flower-img-box">
+            <img src="image/FLOWER.png" alt="覺醒之心 花晶" onerror="tryImg(this, ['FLOWER.png', 'public/image/FLOWER.png', 'image/FLOWER.jpg'])">
+          </div>
+          <div class="flower-video-box">
+            <video controls preload="metadata">
+              <source src="video/heart.mp4" type="video/mp4">
+              您的瀏覽器不支援影片播放。
+            </video>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. 任督調和 -->
+      <div class="flower-card">
+        <div class="flower-info">
+          <h3>任督調和</h3>
+          <div class="flower-subtitle">打通生命中軸 • 回到自身平衡與放鬆</div>
+          <p class="flower-desc">撐得太久、身心緊繃？【任督調和】專為疏通生命中軸而生。調頻定心、幫助靜心凝神，釋放累積在脊椎與背部的陳舊緊繃，強化內在定性與生命底氣。</p>
+          <a href="https://www.cistusaroma.com/index.php?route=product/product&product_id=354&search=%E8%8A%B1%E6%99%B6" target="_blank" class="btn-product-link"><i class="fas fa-shopping-bag"></i> 前往官網查看 任督調和</a>
+        </div>
+        <div class="flower-media">
+          <div class="flower-img-box">
+            <img src="image/FLOWER.png" alt="任督調和 花晶" onerror="tryImg(this, ['FLOWER.png', 'public/image/FLOWER.png', 'image/FLOWER.jpg'])">
+          </div>
+          <div class="flower-video-box">
+            <video controls preload="metadata">
+              <source src="video/Harmonization.mp4" type="video/mp4">
+              您的瀏覽器不支援影片播放。
+            </video>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. 氣脈舒暢 -->
+      <div class="flower-card">
+        <div class="flower-info">
+          <h3>氣脈舒暢</h3>
+          <div class="flower-subtitle">洗滌累積印記 • 暢通全身氣脈經絡</div>
+          <p class="flower-desc">萃取純淨植物高頻能量，深入肌膚與經絡。化解肩頸、腰背與下肢的氣結緊繃，活化代謝循環與淋巴引流，讓疲憊身心重獲輕盈自在。</p>
+          <a href="https://www.cistusaroma.com/index.php?route=product/product&product_id=353&search=%E8%8A%B1%E6%99%B6" target="_blank" class="btn-product-link"><i class="fas fa-shopping-bag"></i> 前往官網查看 氣脈舒暢</a>
+        </div>
+        <div class="flower-media">
+          <div class="flower-img-box">
+            <img src="image/FLOWER.png" alt="氣脈舒暢 花晶" onerror="tryImg(this, ['FLOWER.png', 'public/image/FLOWER.png', 'image/FLOWER.jpg'])">
+          </div>
+          <div class="flower-video-box">
+            <video controls preload="metadata">
+              <source src="video/flow-smoothly.mp4" type="video/mp4">
+              您的瀏覽器不支援影片播放。
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 學員專區 -->
+  <section id="student-zone">
+    <div class="section-header">
+      <h2>學員專區</h2>
+      <p>官網知識新知 • 常見 Q&A 研習解答 • 學員互動交流平台</p>
+    </div>
+
+    <!-- 3 大 Tab 頁籤切換 -->
+    <div class="student-tab-nav">
+      <button class="tab-btn active" onclick="switchTab('blog')"><i class="fas fa-newspaper"></i> 官網精選貼文</button>
+      <button class="tab-btn" onclick="switchTab('qa')"><i class="fas fa-question-circle"></i> 常見 Q&A 解答</button>
+      <button class="tab-btn" onclick="switchTab('board')"><i class="fas fa-comments"></i> 學員 Q&A 互動留言板</button>
+    </div>
+
+    <!-- Tab 1: 官網部落格貼文 -->
+    <div id="tab-blog" class="tab-content active">
+      <div class="blog-grid">
+        <article class="blog-card">
+          <div class="blog-body">
+            <div class="blog-meta">牌卡與身心療癒 • 2026-08-09</div>
+            <h3 class="blog-title">從心靈洞見到商業落地！「隙晶花藏」花晶療癒牌卡導師班</h3>
+            <p class="blog-text">珍芯晴芳香學院推出的「隙晶花藏」療癒牌卡，首創將 12 大人生議題投射卡與 Cistus 獨家五大花晶結合，打造「視覺洞見＋嗅覺能量調頻」的身心療癒系統。</p>
+          </div>
+          <div class="blog-source">
+            來源出處：<a href="https://www.cistusaroma.com/news?journal_blog_post_id=60" target="_blank">cistusaroma 珍芯晴芳香學院官網 <i class="fas fa-external-link-alt"></i></a>
+          </div>
+        </article>
+
+        <article class="blog-card">
+          <div class="blog-body">
+            <div class="blog-meta">國際賽事與認證 • 2026-03-03</div>
+            <h3 class="blog-title">亞太盃國際調香賽勇奪佳績！專業精油調香師養成與國際認證</h3>
+            <p class="blog-text">繼奧林匹克國際調香賽獲獎後，由梁老師親自率領學員進軍亞太盃調香賽再創佳績。透過 30 支指定精油突破調香瓶頸，調配高辨識度專屬香水。</p>
+          </div>
+          <div class="blog-source">
+            來源出處：<a href="https://www.cistusaroma.com/news?journal_blog_category_id=47" target="_blank">cistusaroma 珍芯晴芳香學院官網 <i class="fas fa-external-link-alt"></i></a>
+          </div>
+        </article>
+
+        <article class="blog-card">
+          <div class="blog-body">
+            <div class="blog-meta">精油與心靈 • 2025-12-02</div>
+            <h3 class="blog-title">精油洞悉 vs 內在小孩：探索 42 支精油的心靈療癒秘密</h3>
+            <p class="blog-text">解密冰山底層的情緒組成，運用芳香氣味引導與實際案例分析（如佛手柑等），幫助身心回歸平靜，找到屬於內在小孩的安全感。</p>
+          </div>
+          <div class="blog-source">
+            來源出處：<a href="https://www.cistusaroma.com/news?journal_blog_category_id=56" target="_blank">cistusaroma 珍芯晴芳香學院官網 <i class="fas fa-external-link-alt"></i></a>
+          </div>
+        </article>
+
+        <article class="blog-card">
+          <div class="blog-body">
+            <div class="blog-meta">科學芳療 • 2025-01-07</div>
+            <h3 class="blog-title">經絡檢測與科學芳療：結合陰陽概念與數據的現代芳香照護</h3>
+            <p class="blog-text">以經絡檢測數據為根基，融合中國養生陰陽概念，為第一線照護人員與居家保養提供精準高質感的身心狀態檢測與芳香調理方案。</p>
+          </div>
+          <div class="blog-source">
+            來源出處：<a href="https://www.cistusaroma.com/news?journal_blog_category_id=56" target="_blank">cistusaroma 珍芯晴芳香學院官網 <i class="fas fa-external-link-alt"></i></a>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Tab 2: 常見 Q&A -->
+    <div id="tab-qa" class="tab-content">
+      <div class="qa-container">
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <span>Q1: 零基礎的美業者或身心靈老師，適合學習 8 大 AI 技能嗎？</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="qa-answer">
+            非常適合！課程專為沒有程式背景的美業者與導師設計。我們透過白話步驟教學與範本指令 Prompt，協助您從文案生成、視覺美學到自動化工具一步步落地運用。
+          </div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <span>Q2: 專屬豐盛圓滿花晶如何搭配學院的 AI 牌卡系統使用？</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="qa-answer">
+            隙晶花藏牌卡能協助精準投射個案的情緒卡點與印記，搭配 AI 諮詢小幫手能快速分析身心狀態，並自動比對輸出最適切的花晶與精油調頻配方建議。
+          </div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <span>Q3: 完成 Level 6 AI 工作流課程後，真的能實現自動發放研習證書嗎？</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="qa-answer">
+            是的！我們課程將帶您串接免費的 Tally 表單與 Make 自動化平台，學員完成研習填表後，系統會自動生成帶有名字與編號的 PDF 研習證書並即時發送至學員 Email。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 3: 學員註冊 / 登入 Q&A 互動留言板 -->
+    <div id="tab-board" class="tab-content">
+      <div class="board-container">
+        <div class="student-status-bar">
+          <div class="student-user-info" id="studentUserInfo">
+            <i class="fas fa-user-circle" style="font-size:1.4rem; color:var(--color-warm-orange);"></i>
+            <span id="currentStudentName">訪客學員 (未登入)</span>
+          </div>
+          <button class="btn-auth" id="btnAuthModal" onclick="openAuthModal()"><i class="fas fa-sign-in-alt"></i> 學員註冊 / 登入</button>
+        </div>
+
+        <form class="comment-form" id="commentForm">
+          <div class="form-group">
+            <label for="commentType"><i class="fas fa-tag"></i> 發問與留言類別</label>
+            <select id="commentType" class="form-control">
+              <option value="課程研習提問">課程研習提問 (Q&A)</option>
+              <option value="花晶使用心得">花晶使用心得 (分享)</option>
+              <option value="AI 實戰技能諮詢">AI 實戰技能諮詢 (諮詢)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="commentText"><i class="fas fa-edit"></i> 您的提問或心得留言</label>
+            <textarea id="commentText" class="form-control" rows="4" placeholder="請寫下您的提問或心得...（登入後發言可獲得導師優先解答）" required></textarea>
+          </div>
+          <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> 發布學員提問 / 留言</button>
+        </form>
+
+        <div class="comments-list" id="commentsList">
+          <div class="comment-item">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <div>
+                <span style="font-weight:700; color:var(--color-cocoa);">雅婷老師</span>
+                <span class="comment-badge">已認證學員</span>
+                <span style="font-size:0.8rem; color:var(--color-text-muted); margin-left:8px;">[課程研習提問]</span>
+              </div>
+              <span style="font-size:0.8rem; color:var(--color-text-muted);">2026-09-21</span>
+            </div>
+            <p style="color: var(--color-text-main);">請問神聖之光花晶搭配 Level 4 的 AI 牌卡系統，在店面進行個案諮詢時，一次建議體驗多久時間？</p>
+            <div class="comment-reply">
+              <i class="fas fa-reply" style="color:var(--color-warm-orange); margin-right:5px;"></i> <strong>學院導師回覆：</strong> 雅婷老師您好，建議先進行 10-15 分鐘的牌卡投射調頻，再使用神聖之光進行 20 分鐘顱內淨化，體驗效果最佳！
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal 1: 8大 AI 技能詳細 Modal -->
+  <div class="modal-overlay" id="skillModal">
+    <div class="modal-card">
+      <span class="modal-close" onclick="closeSkillModal()">&times;</span>
+      <div class="modal-banner-box">
+        <img id="modalImg" src="" alt="AI 技能圖">
+      </div>
+      <div class="modal-content">
+        <span class="modal-tag" id="modalTag">LEVEL 1 AI 實戰技能</span>
+        <h3 id="modalTitle">技能名稱</h3>
+        
+        <div class="modal-detail-block">
+          <div class="modal-section-item">
+            <h4><i class="fas fa-book-open" style="color:var(--color-warm-orange);"></i> 課程說明與主題</h4>
+            <p id="modalTopic"></p>
+          </div>
+
+          <div class="modal-section-item">
+            <h4><i class="fas fa-tasks" style="color:var(--color-warm-orange);"></i> 會完成哪些項目</h4>
+            <ul id="modalProjects"></ul>
+          </div>
+
+          <div class="modal-section-item">
+            <h4><i class="fas fa-trophy" style="color:var(--color-warm-orange);"></i> 預期成果</h4>
+            <p id="modalOutcomes"></p>
+          </div>
+
+          <div class="modal-section-item">
+            <h4><i class="fas fa-star" style="color:var(--color-warm-orange);"></i> 該技能亮點</h4>
+            <p id="modalHighlights"></p>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <a href="https://line.me/R/ti/p/@878momxk" target="_blank" class="btn-modal-action btn-line">
+            <i class="fab fa-line" style="font-size:1.2rem;"></i> 諮詢我相關課程
+          </a>
+          <a href="https://www.cistusaroma.com/" target="_blank" class="btn-modal-action btn-website">
+            <i class="fas fa-globe" style="font-size:1.1rem;"></i> 查看官網資訊
+          </a>
+        </div>
       </div>
     </div>
   </div>
 
-  <script>
-    const tarotDeck = [
-      { name: "0 愚者 (The Fool)", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg", desc: "象徵新的開始、冒險與無限可能。保持開放與純真的心擁抱未知。" },
-      { name: "I 魔術師 (The Magician)", img: "https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg", desc: "代表創造力、資源整合與行動力。您已具備實現目標的所有工具。" },
-      { name: "II 女祭司 (The High Priestess)", img: "https://upload.wikimedia.org/wikipedia/commons/8/88/RWS_Tarot_02_High_Priestess.jpg", desc: "象徵直覺、內在智慧與平靜。靜下心來聽取您內心深處的聲音。" },
-      { name: "III 皇后 (The Empress)", img: "https://upload.wikimedia.org/wikipedia/commons/d/d2/RWS_Tarot_03_Empress.jpg", desc: "代表豐盛、滋養與無條件的愛。享受生活中的美好與創造成果。" },
-      { name: "IV 皇帝 (The Emperor)", img: "https://upload.wikimedia.org/wikipedia/commons/c/c3/RWS_Tarot_04_Emperor.jpg", desc: "象徵秩序、領導力與穩固建立。運用理性與規範邁向明確目標。" },
-      { name: "X 命運之輪 (Wheel of Fortune)", img: "https://upload.wikimedia.org/wikipedia/commons/3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg", desc: "代表轉機、幸運與循環週期。順應順境與逆境的流動，迎接新契機。" },
-      { name: "XVII 星星 (The Star)", img: "https://upload.wikimedia.org/wikipedia/commons/d/db/RWS_Tarot_17_Star.jpg", desc: "象徵希望、靈感與療癒能量。宇宙正為您照亮前行的光芒。" },
-      { name: "XIX 太陽 (The Sun)", img: "https://upload.wikimedia.org/wikipedia/commons/1/17/RWS_Tarot_19_Sun.jpg", desc: "代表成功、活力與充滿希望的光明。您的真心付出終將收穫豐碩。" }
-    ];
+  <!-- Modal 2: 學員註冊 / 登入彈窗 -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-card" style="max-width:480px;">
+      <span class="modal-close" onclick="closeAuthModal()">&times;</span>
+      <div class="modal-content" style="padding:2.5rem 2rem;">
+        <h3 style="text-align:center; margin-bottom:1.5rem;"><i class="fas fa-user-graduate" style="color:var(--color-warm-orange);"></i> 學員註冊 / 登入</h3>
+        <form id="authForm" onsubmit="handleAuth(event)">
+          <div class="form-group" style="margin-bottom:1rem;">
+            <label><i class="fas fa-signature"></i> 學員姓名 / 暱稱</label>
+            <input type="text" id="authName" class="form-control" placeholder="例如：美學導師 晴天" required>
+          </div>
+          <div class="form-group" style="margin-bottom:1.5rem;">
+            <label><i class="fas fa-envelope"></i> 學員 Email (作為註冊驗證)</label>
+            <input type="email" id="authEmail" class="form-control" placeholder="yourname@gmail.com" required>
+          </div>
+          <button type="submit" class="btn-submit" style="width:100%; background:var(--color-warm-orange); color:var(--color-cocoa); font-size:1.05rem; font-weight:700;">確定登入 / 完成註冊</button>
+        </form>
+      </div>
+    </div>
+  </div>
 
-    const spreadLabels = {
-      1: ["今日指引"],
-      3: ["過去影響", "現在狀態", "未來趨勢"],
-      7: ["過去經驗", "現在問題", "未來發展", "建議對策", "周遭環境", "希望或恐懼", "最終結果"]
+  <footer>
+    <p>珍芯晴芳香學院 Cistus Aroma Academy &copy; 2026 All Rights Reserved.</p>
+    <p style="font-size: 0.85rem; margin-top: 5px; opacity: 0.8;">自然療癒 × 精緻美學 × 溫柔專業</p>
+  </footer>
+
+  <script>
+    // 圖片載入失敗備援機制
+    function tryImg(imgElement, pathCandidates) {
+      if (!imgElement || imgElement.dataset.success) return;
+      let currentIndex = parseInt(imgElement.dataset.pathIndex || '0');
+      if (currentIndex < pathCandidates.length) {
+        imgElement.dataset.pathIndex = currentIndex + 1;
+        imgElement.src = pathCandidates[currentIndex];
+      } else {
+        imgElement.style.display = 'none';
+      }
+    }
+
+    // 手機版選單 Toggle
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navLinks = document.getElementById('navLinks');
+    mobileToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
+
+    // 學員專區 3 大 Tab 切換
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+      if (tabName === 'blog') {
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        document.getElementById('tab-blog').classList.add('active');
+      } else if (tabName === 'qa') {
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        document.getElementById('tab-qa').classList.add('active');
+      } else {
+        document.querySelectorAll('.tab-btn')[2].classList.add('active');
+        document.getElementById('tab-board').classList.add('active');
+      }
+    }
+
+    // Q&A 折疊展開
+    function toggleQA(element) {
+      const answer = element.nextElementSibling;
+      const icon = element.querySelector('i');
+      if (answer.style.display === 'block') {
+        answer.style.display = 'none';
+        icon.style.transform = 'rotate(0deg)';
+      } else {
+        answer.style.display = 'block';
+        icon.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    // 學員註冊與登入模擬邏輯
+    let currentStudent = null;
+
+    function openAuthModal() {
+      document.getElementById('authModal').style.display = 'flex';
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModal').style.display = 'none';
+    }
+
+    function handleAuth(e) {
+      e.preventDefault();
+      const name = document.getElementById('authName').value;
+      currentStudent = name;
+
+      document.getElementById('currentStudentName').innerText = `${name} (已認證學員)`;
+      document.getElementById('btnAuthModal').innerText = '已登入';
+      document.getElementById('btnAuthModal').style.background = '#8C7B73';
+      document.getElementById('btnAuthModal').style.color = '#FFFFFF';
+
+      closeAuthModal();
+      alert(`歡迎回來，${name} 學員！您現在可以在留言板發問與交流囉！`);
+    }
+
+    // 發布學員留言
+    const commentForm = document.getElementById('commentForm');
+    const commentsList = document.getElementById('commentsList');
+
+    commentForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const type = document.getElementById('commentType').value;
+      const text = document.getElementById('commentText').value;
+      const date = new Date().toISOString().split('T')[0];
+      const author = currentStudent ? currentStudent : "熱心學員";
+
+      const newComment = document.createElement('div');
+      newComment.className = 'comment-item';
+      newComment.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <div>
+            <span style="font-weight:700; color:var(--color-cocoa);">${author}</span>
+            <span class="comment-badge">${currentStudent ? '已認證學員' : '訪客'}</span>
+            <span style="font-size:0.8rem; color:var(--color-text-muted); margin-left:8px;">[${type}]</span>
+          </div>
+          <span style="font-size:0.8rem; color:var(--color-text-muted);">${date}</span>
+        </div>
+        <p style="color: var(--color-text-main);">${text}</p>
+      `;
+
+      commentsList.prepend(newComment);
+      commentForm.reset();
+      alert('您的提問與留言已成功發布！導師將盡快為您解答。');
+    });
+
+    // 8大 AI 技能詳細資料庫
+    const skillData = {
+      1: {
+        title: "LEVEL 1 AI文案力：AI幫我工作",
+        tag: "LEVEL 1 • ChatGPT 文案與工作助理",
+        imgCandidates: ['image/level1.png', 'public/image/level1.png', 'image/level1.jpg'],
+        topic: "【AI幫我工作】建立高效率 Prompt 工程學，掌握提問邏輯與脈絡設定，讓 ChatGPT 成為專屬的高效文案秘書。",
+        projects: ["個人化 Prompt 指令庫建立", "社群衛教與療癒貼文寫作模組", "會議紀錄與日常工作報告模板"],
+        outcomes: "文案撰寫效率提升 500%，克服寫作瓶頸，每日能穩定輸出充滿溫度的品牌內容。",
+        highlights: "精準角色設定、結構化輸出控制、語氣與風格客製化。"
+      },
+      2: {
+        title: "LEVEL 2 AI視覺力：AI視覺設計",
+        tag: "LEVEL 2 • 品牌風格與圖像生成",
+        imgCandidates: ['image/level2.png', 'public/image/level2.png', 'image/level2.jpg'],
+        topic: "【AI視覺設計】掌控 AI 圖像生成與美學提示詞，輕鬆設計符合『自然療癒 × 精緻美學』的高質感品牌視覺圖片。",
+        projects: ["高級 SPA 柔焦光影形象圖產出", "花晶與精油產品宣傳海報製作", "社群媒體視覺懶人包設計"],
+        outcomes: "零設計背景也能產出雜誌級視覺圖，省下高額的外包設計費用。",
+        highlights: "自然光影控制、暖色調風格一致性、材質細節修飾。"
+      },
+      3: {
+        title: "LEVEL 3 AI影音力：AI影音創作",
+        tag: "LEVEL 3 • 影音腳本與動態生成",
+        imgCandidates: ['image/level3.png', 'public/image/level3.png', 'image/level3.jpg'],
+        topic: "【AI影音創作】結合 AI 自動生成短影音腳本、溫柔系語音旁白與流暢剪輯，快速打造引發情緒共鳴的沉浸式短影片。",
+        projects: ["15-30秒芳療沉浸式短影音創作", "AI 自動語音配音與字幕產出", "社群平台動態影音行銷組件"],
+        outcomes: "掌握流量密碼，大幅提高 IG Reels 與 TikTok 顧客詢問與預約轉換率。",
+        highlights: "文字一鍵轉影音腳本、情感渲染字幕排版、自然擬真語音配音。"
+      },
+      4: {
+        title: "LEVEL 4 AI諮詢力：AI牌卡與身心諮詢",
+        tag: "LEVEL 4 • 隙晶花藏與諮詢輔助",
+        imgCandidates: ['image/level4.png', 'public/image/level4.png', 'image/level4.jpg'],
+        topic: "【AI牌卡與身心諮詢】結合隙晶花藏牌卡系統建置智慧諮詢小幫手，系統化紀錄個案身心狀態並給予專屬建議。",
+        projects: ["個案身心議題與印記分析系統", "花晶與精油個人化調頻配方建議表", "對話式諮詢紀錄歸檔機制"],
+        outcomes: "縮短 70% 諮詢報告整理時間，為學員提供深度且具溫度的客製化對焦報告。",
+        highlights: "身心議題投射分析、客製化花晶調頻建議、對話式諮詢引導。"
+      },
+      5: {
+        title: "LEVEL 5 AI教學力：AI課程與講義架構",
+        tag: "LEVEL 5 • 文獻整合與教材建構",
+        imgCandidates: ['image/level5.png', 'public/image/level5.png', 'image/level5.jpg'],
+        topic: "【AI課程與講義架構】運用 AI 梳理植物精油文獻與專業知識，迅速架構條理分明的認證課程大綱與實作講義。",
+        projects: ["結構化認證課程大綱設計", "學員實作隨堂手冊編寫", "線上測驗與問答資料庫"],
+        outcomes: "大幅縮短 80% 備課時間，快速迭代學院最新認證課程，強化專業權威感。",
+        highlights: "知識庫快速檢索、系統化教學架構建立、隨堂測驗自動生成。"
+      },
+      6: {
+        title: "LEVEL 6 AI自動化：AI工作流自動化",
+        tag: "LEVEL 6 • Tally + Make 工作流自動化",
+        imgCandidates: ['image/level6.png', 'public/image/level6.png', 'image/level6.jpg'],
+        topic: "【AI工作流自動化】串接 Tally 線上表單與 Make 自動化平台，實現學院行政營運全自動化流程。",
+        projects: ["學員線上報名與資料自動歸檔", "研習證書 PDF 自動動態套印", "自動化 Email 研習確認與證書發放"],
+        outcomes: "達成 100% 零人工手動發證，打造流暢且極具專業質感的學員服務體驗。",
+        highlights: "跨平台 Workflow 自動串接、動態 PDF 證書套印、即時郵件發送。"
+      },
+      7: {
+        title: "LEVEL 7 AI行銷力：AI精準行銷與市場洞察",
+        tag: "LEVEL 7 • 市場趨勢與廣告文案",
+        imgCandidates: ['image/level7.png', 'public/image/level7.png', 'image/level7.jpg'],
+        topic: "【AI精準行銷與市場洞察】分析搜尋關鍵字趨勢與目標受眾痛點，自動生成高轉換率之廣告文案與精準行銷推播。",
+        projects: ["受眾痛點與需求分析報告", "Google/FB 高轉換率廣告文案生成", "自動化顧客關懷推播策略"],
+        outcomes: "大幅降低獲客成本，提升體驗課與專業認證班的預約線上轉換率。",
+        highlights: "搜尋意圖精準洞察、痛點行銷文案生成、A/B 測試最佳化。"
+      },
+      8: {
+        title: "LEVEL 8 AI成為你的合夥人：AI商業合夥與全自動營運",
+        tag: "LEVEL 8 • 全方位事業合夥系統",
+        imgCandidates: ['image/level8.png', 'public/image/level8.png', 'image/level8.jpg'],
+        topic: "【AI商業合夥與全自動營運】將 AI 升級為事業合夥人，從個人品牌包裝、花晶諮詢到全自動預約 Portal，建構全天候營運體系。",
+        projects: ["個人療癒品牌定位藍圖", "全自動線上預約 Portal 網站建置", "24/7 自動化客戶服務與引導流程"],
+        outcomes: "擁有 24 小時不間斷運作的數位事業體，讓芳香與花晶療癒事業永續成長。",
+        highlights: "商業模式深度分析、全流程自動化營運、個人 IP 品牌變現。"
+      }
     };
 
-    let currentCount = 1;
+    function openSkillModal(id) {
+      const data = skillData[id];
+      if (!data) return;
 
-    function setSpread(count) {
-      currentCount = count;
-      document.querySelectorAll('.spread-btn').forEach((btn, idx) => {
-        btn.classList.toggle('active', (count===1 && idx===0)||(count===3 && idx===1)||(count===7 && idx===2));
-      });
-      initCards();
-    }
-
-    function initCards() {
-      const container = document.getElementById('cardsContainer');
-      document.getElementById('readingBox').style.display = 'none';
-      container.innerHTML = '';
-      const labels = spreadLabels[currentCount];
+      document.getElementById('modalTitle').innerText = data.title;
+      document.getElementById('modalTag').innerText = data.tag;
       
-      for(let i=0; i<currentCount; i++) {
-        container.innerHTML += `
-          <div class="card-item">
-            <div class="card-label">${labels[i]}</div>
-            <div class="card" onclick="flipCard(this, ${i})">
-              <div class="card-inner">
-                <div class="card-face card-back"></div>
-                <div class="card-face card-front" id="front-${i}"></div>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-    }
+      const modalImg = document.getElementById('modalImg');
+      modalImg.dataset.pathIndex = '0';
+      modalImg.dataset.success = '';
+      tryImg(modalImg, data.imgCandidates);
 
-    let currentDrawn = [];
-
-    function drawCards() {
-      initCards();
-      currentDrawn = [];
-      let shuffled = [...tarotDeck].sort(() => 0.5 - Math.random());
+      document.getElementById('modalTopic').innerText = data.topic;
       
-      for(let i=0; i<currentCount; i++) {
-        currentDrawn.push(shuffled[i]);
-        document.getElementById(`front-${i}`).innerHTML = `<img src="${shuffled[i].img}" alt="${shuffled[i].name}">`;
-      }
+      const projectsList = document.getElementById('modalProjects');
+      projectsList.innerHTML = data.projects.map(p => `<li>${p}</li>`).join('');
 
-      setTimeout(() => {
-        document.querySelectorAll('.card').forEach(c => c.classList.add('flipped'));
-        showReading();
-      }, 300);
+      document.getElementById('modalOutcomes').innerText = data.outcomes;
+      document.getElementById('modalHighlights').innerText = data.highlights;
+
+      document.getElementById('skillModal').style.display = 'flex';
     }
 
-    function showReading() {
-      const box = document.getElementById('readingBox');
-      const content = document.getElementById('readingContent');
-      const labels = spreadLabels[currentCount];
-      let html = '';
-
-      currentDrawn.forEach((card, i) => {
-        html += `
-          <div class="reading-item">
-            <strong>【${labels[i]}】${card.name}</strong><br>
-            ${card.desc}
-          </div>
-        `;
-      });
-
-      content.innerHTML = html;
-      box.style.display = 'block';
+    function closeSkillModal() {
+      document.getElementById('skillModal').style.display = 'none';
     }
 
-    function toggleAudio() {
-      const bgm = document.getElementById('bgm');
-      const btn = document.getElementById('audioBtn');
-      if (bgm.paused) {
-        bgm.play();
-        btn.innerText = "靜音音樂";
-      } else {
-        bgm.pause();
-        btn.innerText = "開啟音樂";
-      }
-    }
-
-    function addComment() {
-      const name = document.getElementById('cName').value || "匿名訪客";
-      const text = document.getElementById('cText').value;
-      if(!text) return alert("請輸入留言內容！");
-      
-      const list = document.getElementById('commentList');
-      list.innerHTML = `
-        <div class="comment-card">
-          <div class="comment-name">${name}</div>
-          <div>${text}</div>
-        </div>
-      ` + list.innerHTML;
-
-      document.getElementById('cName').value = '';
-      document.getElementById('cText').value = '';
-    }
-
-    // 初始化載入
-    initCards();
+    window.onclick = function(event) {
+      const modal = document.getElementById('skillModal');
+      if (event.target === modal) modal.style.display = "none";
+      if (event.target === document.getElementById('authModal')) closeAuthModal();
+    };
   </script>
 </body>
 </html>
